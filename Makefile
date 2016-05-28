@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-Wall
-OBJECTS=radio_tea5767.o
-BINARIES=radio_tea5767
+OBJECTS=tda7439.o
+BINARIES=tda7439
 LDFLAGS+= -lm -lwiringPi
 
 all : $(BINARIES)
