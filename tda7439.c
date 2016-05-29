@@ -11,7 +11,6 @@
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <unistd.h> 
-#include <math.h>
 #include <string.h>
 #include <ctype.h>
 #include <libgen.h>
@@ -78,11 +77,11 @@ void usage()
 	fprintf(stderr, "  mute (toggle)\n");
 	fprintf(stderr, "  selector <1~4>\n");
 	fprintf(stderr, "  volume [up|down] <-40~0> (1dB steps)\n");
-	fprintf(stderr, "  gain <0~30> (1dB steps)\n");
-	fprintf(stderr, "  base <-14~14> (2dB steps)\n");
-	fprintf(stderr, "  mid-range <-14~14> (2dB steps)\n");
-	fprintf(stderr, "  treble <-14~14> (2dB steps)\n");
-	fprintf(stderr, "  speaker-attenuation <0~72> (1dB steps)\n");
+	fprintf(stderr, "  gain [up|down] <0~30> (1dB steps)\n");
+	fprintf(stderr, "  base [up|down] <-14~14> (2dB steps)\n");
+	fprintf(stderr, "  mid-range [up|down] <-14~14> (2dB steps)\n");
+	fprintf(stderr, "  treble [up|down] <-14~14> (2dB steps)\n");
+	fprintf(stderr, "  speaker-attenuation [up|down] <0~72> (1dB steps)\n");
 	fprintf(stderr, "  reset (reset to default)\n");
 	fprintf(stderr, "  status (print current status)\n");
 	fprintf(stderr, "  help (this message)\n");
