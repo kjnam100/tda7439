@@ -84,7 +84,7 @@ int chk_write(int fd, unsigned char *data, int len)
 	return write_ok;
 }
 
-void write_all(int fd)
+void write_all(int fd, int flag)
 {
 	int i;
 	unsigned char data[9];
@@ -99,7 +99,8 @@ void write_all(int fd)
 	else write_ok = 1;
 
 	save_tda7439_stat();
-	system("/home/pi/bin/ssd1306_info.py");
+	if (flag)
+		system("/home/pi/bin/ssd1306_info.py");
 
 	if (write_ok == 0) {
 		fprintf(stderr, "TDA7439 write fail\n");
@@ -141,14 +142,14 @@ int main(int argc, char *argv[])
 	}
 
 	if (argc == 2 && (len = strlen(argv[1])) && !strncmp(argv[1], "reset", len)) {
-		write_all(fd);
+		write_all(fd, 1);
 		exit(0);
 	}	
 
 	get_tda7439_stat();
 
 	if (argc < 2) {
-		write_all(fd);
+		write_all(fd, 0);
 		exit(0);
 	}
 
@@ -160,14 +161,14 @@ int main(int argc, char *argv[])
 				usage();
 
 			tda7439_data[1] = 4 - val;
-			write_all(fd);
+			write_all(fd, 0);
 		}
 		else
 			printf("Current Input selector = %d\n", 4 - tda7439_data[1]);
 	}
 	else if (argc == 2 && !strncmp(argv[1], "mute", len)) {
 		mute = (mute + 1) % 2;
-		write_all(fd);
+		write_all(fd, 1);
 	}
 	else if (!strncmp(argv[1], "gain", len)) {
 		if (argc > 2) {
@@ -185,7 +186,7 @@ int main(int argc, char *argv[])
 				if (val >= 0 && val <= 30)
 					tda7439_data[2] = val / 2;
 			}
-			write_all(fd);
+			write_all(fd, 1);
 		}
 		else 
 			printf("Current Input gain = %d dB\n", tda7439_data[2] * 2);
@@ -208,7 +209,7 @@ int main(int argc, char *argv[])
 				else
 					usage();
 			}
-			write_all(fd);
+			write_all(fd, 1);
 		}
 		else 
 			printf("Volume = %c%d dB\n", tda7439_data[3]?'-':0, tda7439_data[3]);
@@ -235,7 +236,7 @@ int main(int argc, char *argv[])
 				else
 					usage();
 			}
-			write_all(fd);
+			write_all(fd, 1);
 		}
 		else 
 			printf("Current Bass gain = %d dB\n", t_tbl[tda7439_data[4]]);
@@ -262,7 +263,7 @@ int main(int argc, char *argv[])
 				else
 					usage();
 			}
-			write_all(fd);
+			write_all(fd, 1);
 		}
 		else 
 			printf("Current Mid-range gain = %d dB\n", t_tbl[tda7439_data[5]]);
@@ -289,7 +290,7 @@ int main(int argc, char *argv[])
 				else
 					usage();
 			}
-			write_all(fd);
+			write_all(fd, 1);
 		}
 		else 
 			printf("Current Treble gain = %d dB\n", t_tbl[tda7439_data[6]]);
@@ -314,7 +315,7 @@ int main(int argc, char *argv[])
 			}
 
 			tda7439_data[8] = tda7439_data[7];
-			write_all(fd);
+			write_all(fd, 1);
 		}
 		else {
 			printf("Current Speaker attenuation = %d dB\n", tda7439_data[7]);
